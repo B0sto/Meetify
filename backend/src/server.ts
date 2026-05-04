@@ -1,14 +1,15 @@
-import express, { type Request, type Response } from 'express'
-import dotenv from 'dotenv';
+import express from 'express'
 import { connectToDB } from './configs/db.js';
+import cookieParser from 'cookie-parser';
+import authRoute from './auth/auth.route.js';
 
 const app = express();
-dotenv.config();
+app.use(express.json());
+app.use(cookieParser());
 connectToDB();
 
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Server is running fine")
-})
+app.use("/api/auth", authRoute)
+
 
 export default app;
